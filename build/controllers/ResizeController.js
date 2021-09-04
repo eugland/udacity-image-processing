@@ -94,7 +94,13 @@ exports.ResizeController.get('/', function (req, res, next) { return __awaiter(v
                     noImagesError = true;
                 }
                 _c.label = 8;
-            case 8:
+            case 8: return [4 /*yield*/, new Promise(function (resolve) {
+                    setTimeout(function () {
+                        resolve('give it some time for pics to show up');
+                    }, 300);
+                })];
+            case 9:
+                _c.sent();
                 res.render('resize', {
                     data: finalOutputFiles,
                     noParams: noParams,
