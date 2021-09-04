@@ -48,55 +48,53 @@ var getFinalImages_1 = require("../modules/getFinalImages");
 var transformImage_1 = __importDefault(require("../modules/transformImage"));
 exports.ResizeController = express_1.Router();
 exports.ResizeController.get('/', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, h, w, width, height, _b, inputPath, outputPath, noParams, noImagesError, finalOutputFiles, unResized, format, _i, unResized_1, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
+    var _a, h, w, filename, width, height, img, _b, inputPath, outputPath, noParams, noImagesError, finalOutputFiles, unResized, format, _i, unResized_1, file, inputImage, thumbnailFile, thumbnailFilePath, e_1;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                _a = req.query, h = _a.h, w = _a.w;
+                _a = req.query, h = _a.h, w = _a.w, filename = _a.filename;
                 width = w ? parseInt(w, 10) : null;
                 height = h ? parseInt(h, 10) : null;
+                img = filename ? filename : null;
                 _b = utils_1.imagesPath(__dirname), inputPath = _b.inputPath, outputPath = _b.outputPath;
-                noParams = width !== null || height != null;
+                noParams = width === null && height === null;
                 noImagesError = false;
                 finalOutputFiles = [];
-                if (!(width === null && height === null)) return [3 /*break*/, 1];
-                noParams = true;
-                return [3 /*break*/, 9];
+                if (!!noParams) return [3 /*break*/, 8];
+                unResized = checkImages_1.checkIfImagesExist(width, height, img).unResized;
+                if (!(unResized.length > 0)) return [3 /*break*/, 7];
+                _c.label = 1;
             case 1:
-                unResized = checkImages_1.checkIfImagesExist(width, height).unResized;
-                if (!(unResized.length > 0)) return [3 /*break*/, 8];
-                _c.label = 2;
-            case 2:
-                _c.trys.push([2, 7, , 8]);
+                _c.trys.push([1, 6, , 7]);
                 format = 'jpeg';
                 _i = 0, unResized_1 = unResized;
-                _c.label = 3;
-            case 3:
-                if (!(_i < unResized_1.length)) return [3 /*break*/, 6];
+                _c.label = 2;
+            case 2:
+                if (!(_i < unResized_1.length)) return [3 /*break*/, 5];
                 file = unResized_1[_i];
                 inputImage = path_1.default.join(inputPath, file);
                 thumbnailFile = utils_1.createThumbnailName(file, width, height);
                 thumbnailFilePath = path_1.default.join(outputPath, thumbnailFile);
                 return [4 /*yield*/, transformImage_1.default(inputImage, thumbnailFilePath, format, width, height)];
-            case 4:
+            case 3:
                 _c.sent();
-                _c.label = 5;
-            case 5:
+                _c.label = 4;
+            case 4:
                 _i++;
-                return [3 /*break*/, 3];
-            case 6: return [3 /*break*/, 8];
-            case 7:
+                return [3 /*break*/, 2];
+            case 5: return [3 /*break*/, 7];
+            case 6:
                 e_1 = _c.sent();
                 // error processing image goes here
                 console.log('Error occured while processing image');
-                return [3 /*break*/, 8];
-            case 8:
-                finalOutputFiles = getFinalImages_1.finalImages(width, height, outputPath);
+                return [3 /*break*/, 7];
+            case 7:
+                finalOutputFiles = getFinalImages_1.finalImages(width, height, outputPath, img);
                 if (unResized.length < 1 && finalOutputFiles.length < 1) {
                     noImagesError = true;
                 }
-                _c.label = 9;
-            case 9:
+                _c.label = 8;
+            case 8:
                 res.render('resize', {
                     data: finalOutputFiles,
                     noParams: noParams,

@@ -15,12 +15,23 @@ var ImgMeta = /** @class */ (function () {
     return ImgMeta;
 }());
 exports.ImgMeta = ImgMeta;
-var checkIfImagesExist = function (width, height) {
+var checkIfImagesExist = function (width, height, img) {
+    if (img === void 0) { img = null; }
+    var unResized = [];
     var _a = utils_1.imagesPath(__dirname), inputPath = _a.inputPath, outputPath = _a.outputPath;
     var outputFiles = fs_1.default.readdirSync(outputPath);
     var inputFiles = fs_1.default.readdirSync(inputPath);
+    if (img != null) {
+        inputFiles = inputFiles.filter(function (name) { return name.startsWith(img); });
+        outputFiles = outputFiles.filter(function (name) { return name.startsWith(img); });
+    }
     inputFiles = utils_1.clearFiles(inputFiles);
-    var unResized = inputFiles.filter(function (file) { return !outputFiles.includes(utils_1.createThumbnailName(file, width, height)); });
+    inputFiles.forEach(function (file) {
+        var thumbnailFile = utils_1.createThumbnailName(file, width, height);
+        if (!outputFiles.includes(thumbnailFile)) {
+            unResized.push(file);
+        }
+    });
     return new ImgMeta(unResized, inputFiles, outputFiles);
 };
 exports.checkIfImagesExist = checkIfImagesExist;

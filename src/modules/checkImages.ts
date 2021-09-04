@@ -20,16 +20,27 @@ export class ImgMeta {
 
 export const checkIfImagesExist = (
   width: number | null,
-  height: number | null
+  height: number | null,
+  img: string | null = null
 ): ImgMeta => {
-  const { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
-  const outputFiles: string[] = fs.readdirSync(outputPath);
-  let inputFiles: string[] = fs.readdirSync(inputPath);
+  let unResized: string[] = [];
+  let { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
+  let outputFiles = fs.readdirSync(outputPath);
+  let inputFiles = fs.readdirSync(inputPath);
+
+  if (img != null) {
+    inputFiles = inputFiles.filter((name) => name.startsWith(img));
+    outputFiles = outputFiles.filter((name) => name.startsWith(img));
+  }
 
   inputFiles = clearFiles(inputFiles);
 
-  let unResized = inputFiles.filter(
-    (file) => !outputFiles.includes(createThumbnailName(file, width, height))
-  );
+  inputFiles.forEach((file) => {
+    const thumbnailFile: string = createThumbnailName(file, width, height);
+
+    if (!outputFiles.includes(thumbnailFile)) {
+      unResized.push(file);
+    }
+  });
   return new ImgMeta(unResized, inputFiles, outputFiles);
 };

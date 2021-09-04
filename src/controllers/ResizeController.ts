@@ -15,20 +15,22 @@ export const ResizeController: Router = Router();
 ResizeController.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
-    const { h, w } = req.query;
-    const width: number | null = w ? parseInt(w as string, 10) : null;
-    const height: number | null = h ? parseInt(h as string, 10) : null;
-
+    const { h, w, filename } = req.query;
+    const width = w ? parseInt(w as string, 10) : null;
+    const height = h ? parseInt(h as string, 10) : null;
+    const img = filename ? (filename as string) : null;
     const { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
 
-    let noParams = width !== null || height != null;
+    let noParams = width === null && height === null;
     let noImagesError: boolean = false;
     let finalOutputFiles: string[] = [];
 
-    if (width === null && height === null) {
-      noParams = true;
-    } else {
-      const { unResized }: resizedTypes = checkIfImagesExist(width, height);
+    if (!noParams) {
+      const { unResized }: resizedTypes = checkIfImagesExist(
+        width,
+        height,
+        img
+      );
 
       if (unResized.length > 0) {
         // resizing goes here
@@ -55,7 +57,7 @@ ResizeController.get(
         }
       }
 
-      finalOutputFiles = finalImages(width, height, outputPath);
+      finalOutputFiles = finalImages(width, height, outputPath, img);
       if (unResized.length < 1 && finalOutputFiles.length < 1) {
         noImagesError = true;
       }
