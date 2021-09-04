@@ -61,7 +61,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 describe('Test Resize Controller', function () {
-    it("Requesting the original", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Requesting the original', function () { return __awaiter(void 0, void 0, void 0, function () {
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -74,7 +74,7 @@ describe('Test Resize Controller', function () {
             }
         });
     }); });
-    it("Requesting the resized but already cached Image", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Requesting the resized but already cached Image', function () { return __awaiter(void 0, void 0, void 0, function () {
         var _a, w, h, result;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -89,7 +89,7 @@ describe('Test Resize Controller', function () {
             }
         });
     }); });
-    it("Requesting a randome image size ", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Requesting a randome image size ', function () { return __awaiter(void 0, void 0, void 0, function () {
         var _a, w, h, result;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -103,6 +103,6 @@ describe('Test Resize Controller', function () {
                     return [2 /*return*/];
             }
         });
-    }); }, 10000);
+    }); }, 10000); // wait a bit longer for sharp to read and write files
 });
 //# sourceMappingURL=ResizeControllerSpec.js.map

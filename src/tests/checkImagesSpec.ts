@@ -19,12 +19,9 @@ for (const file in MOCK_FILE_INFO_INPUT) {
 }
 
 describe('Check if images exist', () => {
-  
   it('Testing the default files exist before all else', () => {
     // do something that calls the genName function
     // console.log(checkIfImagesExist(null, null));
     expect(checkIfImagesExist(null, null)).toBeInstanceOf(ImgMeta);
   });
-
-
 });
