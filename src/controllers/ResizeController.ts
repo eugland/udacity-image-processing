@@ -16,12 +16,12 @@ ResizeController.get(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
     const { h, w, filename } = req.query;
-    const width = w ? parseInt(w as string, 10) : null;
-    const height = h ? parseInt(h as string, 10) : null;
+    let width = w ? parseInt(w as string, 10) : null;
+    let height = h ? parseInt(h as string, 10) : null;
     const img = filename ? (filename as string) : null;
     const { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
-
-    let noParams = width === null && height === null;
+    console.log("my width and height", width , height)
+    let noParams = width === null && height === null || (isNaN(width as number) || isNaN(height as number));
     let noImagesError: boolean = false;
     let finalOutputFiles: string[] = [];
 

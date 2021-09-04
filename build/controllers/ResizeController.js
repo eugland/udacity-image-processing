@@ -57,7 +57,8 @@ exports.ResizeController.get('/', function (req, res, next) { return __awaiter(v
                 height = h ? parseInt(h, 10) : null;
                 img = filename ? filename : null;
                 _b = utils_1.imagesPath(__dirname), inputPath = _b.inputPath, outputPath = _b.outputPath;
-                noParams = width === null && height === null;
+                console.log("my width and height", width, height);
+                noParams = width === null && height === null || (isNaN(width) || isNaN(height));
                 noImagesError = false;
                 finalOutputFiles = [];
                 if (!!noParams) return [3 /*break*/, 8];
