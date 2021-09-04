@@ -21,7 +21,7 @@ ResizeController.get(
 
     const { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
 
-    let noParams: boolean = false;
+    let noParams = width !== null || height != null;
     let noImagesError: boolean = false;
     let finalOutputFiles: string[] = [];
 
@@ -60,11 +60,6 @@ ResizeController.get(
         noImagesError = true;
       }
     }
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('wait before rendering');
-      }, 1000);
-    });
 
     res.render('resize', {
       data: finalOutputFiles,

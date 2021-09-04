@@ -22,19 +22,14 @@ export const checkIfImagesExist = (
   width: number | null,
   height: number | null
 ): ImgMeta => {
-  const unResized: string[] = [];
   const { inputPath, outputPath }: ImgDirMeta = imagesPath(__dirname);
   const outputFiles: string[] = fs.readdirSync(outputPath);
   let inputFiles: string[] = fs.readdirSync(inputPath);
 
   inputFiles = clearFiles(inputFiles);
 
-  inputFiles.forEach((file) => {
-    const thumbnailFile: string = createThumbnailName(file, width, height);
-
-    if (!outputFiles.includes(thumbnailFile)) {
-      unResized.push(file);
-    }
-  });
+  let unResized = inputFiles.filter(
+    (file) => !outputFiles.includes(createThumbnailName(file, width, height))
+  );
   return new ImgMeta(unResized, inputFiles, outputFiles);
 };

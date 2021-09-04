@@ -56,7 +56,7 @@ exports.ResizeController.get('/', function (req, res, next) { return __awaiter(v
                 width = w ? parseInt(w, 10) : null;
                 height = h ? parseInt(h, 10) : null;
                 _b = utils_1.imagesPath(__dirname), inputPath = _b.inputPath, outputPath = _b.outputPath;
-                noParams = false;
+                noParams = width !== null || height != null;
                 noImagesError = false;
                 finalOutputFiles = [];
                 if (!(width === null && height === null)) return [3 /*break*/, 1];
@@ -96,13 +96,7 @@ exports.ResizeController.get('/', function (req, res, next) { return __awaiter(v
                     noImagesError = true;
                 }
                 _c.label = 9;
-            case 9: return [4 /*yield*/, new Promise(function (resolve) {
-                    setTimeout(function () {
-                        resolve('wait before rendering');
-                    }, 1000);
-                })];
-            case 10:
-                _c.sent();
+            case 9:
                 res.render('resize', {
                     data: finalOutputFiles,
                     noParams: noParams,
