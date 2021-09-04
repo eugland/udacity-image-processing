@@ -39,7 +39,7 @@ describe('Test Resize Controller', () => {
     verifyCheckImagesWithSize(result, w, h);
   });
 
-  it('Requesting a randome image size ', async () => {
+  it('Requesting a randome size for all images, this will take a bit longer', async () => {
     let [w, h] = [getRandomInt(1, 1000), getRandomInt(1, 1000)];
     let result = await request(app).get(`/resize?w=${w}&h=${h}`).send();
 
@@ -48,7 +48,7 @@ describe('Test Resize Controller', () => {
   }, 10_000); // wait a bit longer for sharp to read and write files
 
 
-  it('Requesting resize just one file ', async () => {
+  it('Requesting resize of just one file ', async () => {
     let [w, h] = [getRandomInt(1, 1000), getRandomInt(1, 1000)];
     let result = await request(app).get(`/resize?filename=fjord&w=${w}&h=${h}`).send();
 

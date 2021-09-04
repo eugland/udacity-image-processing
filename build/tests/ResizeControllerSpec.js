@@ -89,7 +89,7 @@ describe('Test Resize Controller', function () {
             }
         });
     }); });
-    it('Requesting a randome image size ', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Requesting a randome size for all images, this will take a bit longer', function () { return __awaiter(void 0, void 0, void 0, function () {
         var _a, w, h, result;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -104,5 +104,25 @@ describe('Test Resize Controller', function () {
             }
         });
     }); }, 10000); // wait a bit longer for sharp to read and write files
+    it('Requesting resize of just one file ', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var _a, w, h, result, size;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = [getRandomInt(1, 1000), getRandomInt(1, 1000)], w = _a[0], h = _a[1];
+                    return [4 /*yield*/, supertest_1.default(app_1.app).get("/resize?filename=fjord&w=" + w + "&h=" + h).send()];
+                case 1:
+                    result = _b.sent();
+                    size = "_" + w + "_" + h;
+                    expect(result.status).toBe(200);
+                    expect(result.text).toContain("fjord" + size + ".jpg");
+                    expect(result.text).not.toContain("encenadaport" + size + ".jpg");
+                    expect(result.text).not.toContain("icelandwaterfall" + size + ".jpg");
+                    expect(result.text).not.toContain("palmtunnel" + size + ".jpg");
+                    expect(result.text).not.toContain("santamonica" + size + ".jpg");
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
 //# sourceMappingURL=ResizeControllerSpec.js.map
