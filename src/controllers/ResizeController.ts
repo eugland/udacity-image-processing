@@ -63,6 +63,12 @@ ResizeController.get(
       }
     }
 
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('give it some time for pics to show up');
+      }, 300);
+    });
+
     res.render('resize', {
       data: finalOutputFiles,
       noParams,
