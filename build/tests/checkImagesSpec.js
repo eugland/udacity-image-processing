@@ -18,19 +18,6 @@ for (var file in MOCK_FILE_INFO_INPUT) {
     mockFilesInput[dir].push(path_1.default.basename(file));
 }
 describe('Check if images exist', function () {
-    // jest.spyOn(utils, 'clearFiles').mockImplementation(() => ['image1.jpg']);
-    // jest
-    //   .spyOn(utils, 'createThumbnailName')
-    //   .mockImplementation(() => 'image1_200_400.jpg');
-    // jest.spyOn(utils, 'imagesPath').mockImplementation(() => {
-    //   return {
-    //     inputPath: '/path/to/full',
-    //     outputPath: '/path/to/thumbnails'
-    //   };
-    // });
-    // jest
-    //   .spyOn(fs, 'readdirSync')
-    //   .mockImplementation(() => mockFilesInput['/path/to']);
     it('Testing the default files exist before all else', function () {
         // do something that calls the genName function
         // console.log(checkIfImagesExist(null, null));
