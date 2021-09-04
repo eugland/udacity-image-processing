@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"> <title>Image Processing</title>
+    <link rel="stylesheet" href="public/main.css">
+  </head>
+<body>
+  <h1>Udacity Image Processing API</h1>
+  <% if ( data.length > 0 ) { %>
+    <div id="image-container">
+      <p>Provide an url like the one below, or click it to resize.</p>
+      <p class='example'><a href="/resize?w=500&h=400">http://localhost/resize?w=500&h=400</a></p>
+      <% data.forEach((img) => { %>
+        <img class='sized-image' src="public/images/full/<%= img %>">
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class='noParams'>
+      <h3>Oh no!</h3>
+      <p>There is no image to display at this moment</p>
+      <p>Please provide a valid url or click the link below for an image resize operation.</p>
+      <p class='example'>try <a href="/resize?w=500&h=400">http://localhost/resize?w=500&h=400</a></p>
+    </div>
+    
+  <% } %>
+  
+</body>
+</html>
