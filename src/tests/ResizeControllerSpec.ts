@@ -26,8 +26,6 @@ function getRandomInt(min: number, max: number) {
 
 describe('Test Resize Controller', () => {
   it('Requesting the original', async () => {
-    // Note that the dimension 500 and 400 has been cached already in thumbnail and should work
-
     const result = await request(app).get('').send();
     expect(result.status).toBe(200);
     verifyCheckImagesWithSize(result);
@@ -42,11 +40,26 @@ describe('Test Resize Controller', () => {
   });
 
   it('Requesting a randome image size ', async () => {
-    // Note that the dimension 500 and 400 has been cached already in thumbnail and should work
     let [w, h] = [getRandomInt(1, 1000), getRandomInt(1, 1000)];
     let result = await request(app).get(`/resize?w=${w}&h=${h}`).send();
 
     expect(result.status).toBe(200);
     verifyCheckImagesWithSize(result, w, h);
   }, 10_000); // wait a bit longer for sharp to read and write files
+
+
+  it('Requesting resize just one file ', async () => {
+    let [w, h] = [getRandomInt(1, 1000), getRandomInt(1, 1000)];
+    let result = await request(app).get(`/resize?filename=fjord&w=${w}&h=${h}`).send();
+
+    let size = `_${w}_${h}`;
+    expect(result.status).toBe(200);
+    expect(result.text).toContain(`fjord${size}.jpg`);
+
+    expect(result.text).not.toContain(`encenadaport${size}.jpg`);
+    expect(result.text).not.toContain(`icelandwaterfall${size}.jpg`);
+    expect(result.text).not.toContain(`palmtunnel${size}.jpg`);
+    expect(result.text).not.toContain(`santamonica${size}.jpg`);
+  }); 
+
 });
